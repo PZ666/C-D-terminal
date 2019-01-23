@@ -20,7 +20,7 @@
                     </i-FormItem>
                     <br>
                     <i-FormItem prop="password">
-                        <i-Input type="password" v-model="formInline.password" placeholder="Password">
+                        <i-Input type="password" v-model="formInline.password" placeholder="Passwords">
                             <Icon type="ios-lock-outline" slot="prepend"></Icon>
                         </i-Input>
                     </i-FormItem>
