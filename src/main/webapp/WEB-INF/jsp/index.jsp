@@ -15,6 +15,8 @@
 
 
 
+    <!-- include footer java server page code -->
+    <jsp:include page="/WEB-INF/jsp/base/footer.jsp" />
 </div>
 <script>
     new Vue({
