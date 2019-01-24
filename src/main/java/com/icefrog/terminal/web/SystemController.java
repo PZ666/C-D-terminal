@@ -34,4 +34,9 @@ public class SystemController {
         return "";
     }
     
+    @RequestMapping("/cancelLogin")
+    public String cancelLogin(){
+        return this.toLogin();
+    }
+    
 }
