@@ -3,10 +3,12 @@
 <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
 <title>Terminal | icefrog software</title>
 <link rel="stylesheet" type="text/css" href="/static/iview/styles/iview.css">
+<link rel="stylesheet" type="text/css" href="/static/common.css">
 <%--<script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>--%>
 <script type="text/javascript" src="/static/vue.js"></script>
 <%--<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>--%>
 <script type="text/javascript" src="/static/iview/iview.min.js"></script>
+<script type="text/javascript" src="/static/common.js"></script>
 <%--<script src="http://testds.zoomgo.net:10002/static/js/axios/axios.min.js"></script>
 <!-- 引用此js用于解决IE下提示ReferenceError:‘Promise’未定义”的问题-->
 <script src="http://testds.zoomgo.net:10002/static/js/url-search-params-polyfill/index.js"></script>
