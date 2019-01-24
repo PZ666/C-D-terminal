@@ -27,24 +27,24 @@
                 <Menu-Item name="3-1">设置1</Menu-Item>
                 <Menu-Item name="3-2">设置2</Menu-Item>
                 <Menu-Item name="3-3">设置3</Menu-Item>
-
             </Submenu>
         </i-Menu>
-
     </template>
 
-<script type="text/javascript">
-    var app = new Vue({
-        el:'#app1',
-        data:{
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            visible: false,
             theme1: 'light'
         },
-        methods:{
+        methods: {
             show: function () {
                 this.visible = true;
             }
         }
-    });
+    })
 </script>
 </body>
 </html>
