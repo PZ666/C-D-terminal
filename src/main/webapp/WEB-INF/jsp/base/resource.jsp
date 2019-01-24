@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <meta charset="utf-8">
 <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
-<title>Terminal | icefrog open source</title>
+<title>Terminal | icefrog software</title>
 <link rel="stylesheet" type="text/css" href="/static/iview/styles/iview.css">
 <%--<script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>--%>
 <script type="text/javascript" src="/static/vue.js"></script>

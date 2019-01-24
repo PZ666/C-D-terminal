@@ -24,5 +24,14 @@ public class SystemController {
         return "index";
     }
     
+    @RequestMapping("/toSites")
+    public String toSites(){
+        return this.toIndex();
+    }
+    
+    @RequestMapping("/toUploadLogs")
+    public String toUploadLogs(){
+        return "";
+    }
     
 }
