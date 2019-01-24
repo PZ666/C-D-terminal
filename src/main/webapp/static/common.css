@@ -1,0 +1,52 @@
+/**
+ Copyright 2019
+ author:icefrog.su@qq.com
+*/
+
+
+
+body{
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+
+#app{
+    background-color: #f8f8f9;
+}
+
+.master-container {
+    width:98%;
+    height:85%;
+    margin-left:1%;
+    margin-right:1%;
+    padding: 1%;
+    border-radius: 15px;
+    box-shadow: 2px 2px 2px 6px #e8eaec;
+    background-color: white;
+}
+
+.title-tag{
+    font-size:25px;
+    font-weight: bold;
+    border:none;
+}
+
+.ivu-page-item-jump-next, .ivu-page-item-jump-prev, .ivu-page-next, .ivu-page-prev{
+    display: inline-block;
+    vertical-align:unset;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    min-width: 32px;
+    height: 32px;
+    line-height: 30px;
+    list-style: none;
+    text-align: center;
+    cursor: pointer;
+    color: #666;
+    font-family: Arial;
+    border: 1px solid #dcdee2;
+    border-radius: 4px;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
