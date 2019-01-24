@@ -17,7 +17,7 @@
         <Menu-Item name="4">
             操作记录
         </Menu-Item>
-        <Menu-Item name="5">
+        <Menu-Item name="5" to="https://emanage.mofcom.gov.cn/loginGov.html" target="_blank">
             商务部
         </Menu-Item>
         <Submenu name="6">
@@ -26,7 +26,7 @@
             </template>
             <Menu-Item name="6-1">商品类别设置</Menu-Item>
             <Menu-Item name="6-2">系统资源配置</Menu-Item>
-            <Menu-Item name="6-3">关于</Menu-Item>
+            <Menu-Item name="6-3" to="/system/toAbout">关于</Menu-Item>
             <Menu-Item to="/system/cancelLogin" name="6-4">退出登录</Menu-Item>
         </Submenu>
     </i-Menu>

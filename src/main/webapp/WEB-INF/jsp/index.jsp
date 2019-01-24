@@ -28,7 +28,6 @@
 
         <br>
         <template>
-
             <div>
                 <i-Table height="450" :columns="table.columns" :data="table.tableData" :loading="table.isLoading" size="small" border="true" stripe="true"></i-Table>
             </div>

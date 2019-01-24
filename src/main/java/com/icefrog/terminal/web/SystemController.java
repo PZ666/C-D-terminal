@@ -39,4 +39,9 @@ public class SystemController {
         return this.toLogin();
     }
     
+    @RequestMapping("/toAbout")
+    public String toAbout(){
+        return "about";
+    }
+    
 }
