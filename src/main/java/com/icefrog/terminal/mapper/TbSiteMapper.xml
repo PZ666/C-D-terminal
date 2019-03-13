@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icefrog.terminal.mapper.TbSiteMapper" >
+  <resultMap id="BaseResultMap" type="com.icefrog.terminal.model.TbSite" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="update_id" property="updateId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="site_name" property="siteName" jdbcType="VARCHAR" />
+    <result column="site_code" property="siteCode" jdbcType="VARCHAR" />
+    <result column="site_type" property="siteType" jdbcType="VARCHAR" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_id, update_id, create_time, update_time, site_name, site_code, site_type, 
+    res1, res2, res3, is_del
+  </sql>
+  <insert id="batchInsertSite" >
+    insert into tb_site
+    (id,create_id,update_id,create_time,update_time,site_name,site_code,site_type,res1,res2,res3,is_del)
+    values
+    <foreach collection="list" item="item" index="index"
+             separator=",">
+      (
+      #{item.id},
+      #{item.createId},
+      #{item.updateId},
+      #{item.createTime},
+      #{item.updateTime},
+      #{item.siteName},
+      #{item.siteCode},
+      #{item.siteType},
+      #{item.res1},
+      #{item.res2},
+      #{item.res3},
+      #{item.isDel}
+      )
+    </foreach>
+  </insert >
+  <select id="queryAllSites" resultMap="BaseResultMap">
+    select * from tb_site where is_del = 0
+  </select>
+  <select id="pageQuerySites" resultMap="BaseResultMap">
+    select
+    site.id,
+    (select user_name from tb_user where id = site.create_id) as 'create_id',
+    (select user_name from tb_user where id = site.update_id) as 'update_id',
+    site.site_name,site.site_code,site.site_type,site.res1,site.res2,site.res3,site.is_del,site.update_time,site.create_time
+  from tb_site site where is_del = 0
+  <if test="siteName != null">
+    and site_name like #{siteName}
+  </if>
+  <if test="siteCode != null">
+    and site_code like #{siteCode}
+  </if>
+  <if test="siteType != null">
+    and site_type = #{siteType}
+  </if>
+    order by site.update_time desc
+  </select>
+  <update id="logicRemove">
+    update tb_site set is_del = 1 where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_site
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_site
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.icefrog.terminal.model.TbSite" >
+    insert into tb_site (id, create_id, update_id, 
+      create_time, update_time, site_name, 
+      site_code, site_type, res1, 
+      res2, res3, is_del)
+    values (#{id,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{siteName,jdbcType=VARCHAR}, 
+      #{siteCode,jdbcType=VARCHAR}, #{siteType,jdbcType=VARCHAR}, #{res1,jdbcType=VARCHAR}, 
+      #{res2,jdbcType=VARCHAR}, #{res3,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.icefrog.terminal.model.TbSite" >
+    insert into tb_site
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="siteName != null" >
+        site_name,
+      </if>
+      <if test="siteCode != null" >
+        site_code,
+      </if>
+      <if test="siteType != null" >
+        site_type,
+      </if>
+      <if test="res1 != null" >
+        res1,
+      </if>
+      <if test="res2 != null" >
+        res2,
+      </if>
+      <if test="res3 != null" >
+        res3,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="siteName != null" >
+        #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="siteCode != null" >
+        #{siteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="siteType != null" >
+        #{siteType,jdbcType=VARCHAR},
+      </if>
+      <if test="res1 != null" >
+        #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icefrog.terminal.model.TbSite" >
+    update tb_site
+    <set >
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="siteName != null" >
+        site_name = #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="siteCode != null" >
+        site_code = #{siteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="siteType != null" >
+        site_type = #{siteType,jdbcType=VARCHAR},
+      </if>
+      <if test="res1 != null" >
+        res1 = #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        res2 = #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        res3 = #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icefrog.terminal.model.TbSite" >
+    update tb_site
+    set create_id = #{createId,jdbcType=VARCHAR},
+      update_id = #{updateId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      site_name = #{siteName,jdbcType=VARCHAR},
+      site_code = #{siteCode,jdbcType=VARCHAR},
+      site_type = #{siteType,jdbcType=VARCHAR},
+      res1 = #{res1,jdbcType=VARCHAR},
+      res2 = #{res2,jdbcType=VARCHAR},
+      res3 = #{res3,jdbcType=VARCHAR},
+      is_del = #{isDel,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

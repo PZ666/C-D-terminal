@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icefrog.terminal.mapper.TbDailytransferMapper" >
+  <resultMap id="BaseResultMap" type="com.icefrog.terminal.model.TbDailytransfer" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="update_id" property="updateId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="report_time" property="reportTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="res1" property="res1" jdbcType="VARCHAR" />
+    <result column="res2" property="res2" jdbcType="VARCHAR" />
+    <result column="res3" property="res3" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.icefrog.terminal.model.TbDailytransfer" extends="BaseResultMap" >
+    <result column="xml_data" property="xmlData" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_id, update_id, create_time, update_time, report_time, status, company_name, 
+    company_id, res1, res2, res3, is_del
+  </sql>
+  <sql id="Blob_Column_List" >
+    xml_data
+  </sql>
+  <update id="logicRemove">
+    update tb_dailytransfer set is_del = 1 where id = #{id}
+  </update>
+  <select id="pageQueryFer" resultMap="ResultMapWithBLOBs">
+    select
+    fer.id,
+    (select user_name from tb_user where id = fer.create_id) as 'create_id',
+    (select user_name from tb_user where id = fer.update_id) as 'update_id',
+    (select count(*) from tb_dailytransfer_order where is_del = 0 and dailytransfer_id = fer.id) as 'res1',
+    fer.create_time,fer.update_time,fer.report_time,fer.status,fer.xml_data,fer.company_name,fer.company_id,fer.res2,fer.res3,fer.is_del
+    from tb_dailytransfer fer where fer.is_del = 0
+    <if test="status != null">
+      and status = #{status}
+    </if>
+    <if test="startTime != null">
+      and unix_timestamp(fer.create_time) &gt;= unix_timestamp(#{startTime})
+    </if>
+    <if test="endTime != null">
+      and unix_timestamp(fer.create_time) &lt;= unix_timestamp(#{endTime})
+    </if>
+    order by fer.create_time desc
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_dailytransfer
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_dailytransfer
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.icefrog.terminal.model.TbDailytransfer" >
+    insert into tb_dailytransfer (id, create_id, update_id, 
+      create_time, update_time, report_time, 
+      status, company_name, company_id, 
+      res1, res2, res3, is_del, 
+      xml_data)
+    values (#{id,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{reportTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, 
+      #{res1,jdbcType=VARCHAR}, #{res2,jdbcType=VARCHAR}, #{res3,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}, 
+      #{xmlData,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.icefrog.terminal.model.TbDailytransfer" >
+    insert into tb_dailytransfer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="reportTime != null" >
+        report_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="res1 != null" >
+        res1,
+      </if>
+      <if test="res2 != null" >
+        res2,
+      </if>
+      <if test="res3 != null" >
+        res3,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+      <if test="xmlData != null" >
+        xml_data,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportTime != null" >
+        #{reportTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="res1 != null" >
+        #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="xmlData != null" >
+        #{xmlData,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icefrog.terminal.model.TbDailytransfer" >
+    update tb_dailytransfer
+    <set >
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportTime != null" >
+        report_time = #{reportTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="res1 != null" >
+        res1 = #{res1,jdbcType=VARCHAR},
+      </if>
+      <if test="res2 != null" >
+        res2 = #{res2,jdbcType=VARCHAR},
+      </if>
+      <if test="res3 != null" >
+        res3 = #{res3,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="xmlData != null" >
+        xml_data = #{xmlData,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.icefrog.terminal.model.TbDailytransfer" >
+    update tb_dailytransfer
+    set create_id = #{createId,jdbcType=VARCHAR},
+      update_id = #{updateId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      report_time = #{reportTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      res1 = #{res1,jdbcType=VARCHAR},
+      res2 = #{res2,jdbcType=VARCHAR},
+      res3 = #{res3,jdbcType=VARCHAR},
+      is_del = #{isDel,jdbcType=INTEGER},
+      xml_data = #{xmlData,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icefrog.terminal.model.TbDailytransfer" >
+    update tb_dailytransfer
+    set create_id = #{createId,jdbcType=VARCHAR},
+      update_id = #{updateId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      report_time = #{reportTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      res1 = #{res1,jdbcType=VARCHAR},
+      res2 = #{res2,jdbcType=VARCHAR},
+      res3 = #{res3,jdbcType=VARCHAR},
+      is_del = #{isDel,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

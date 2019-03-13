@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icefrog.terminal.mapper.TbProductTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.icefrog.terminal.model.TbProductType" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="update_id" property="updateId" jdbcType="VARCHAR" />
+    <result column="broad_type" property="broadType" jdbcType="VARCHAR" />
+    <result column="product_type" property="productType" jdbcType="VARCHAR" />
+    <result column="generate_buy_no" property="generateBuyNo" jdbcType="VARCHAR" />
+    <result column="generate_sell_no" property="generateSellNo" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_id, update_id, broad_type, product_type, generate_buy_no, generate_sell_no, 
+    create_time, update_time, remark, isdel
+  </sql>
+  <select id="dimSearchProductType" resultMap="BaseResultMap">
+    select * from tb_product_type where isdel = 0 and product_type like #{typeName} limit 1
+  </select>
+  <select id="queryAllProductTypes" resultMap="BaseResultMap">
+    select * from tb_product_type where isdel = 0
+  </select>
+
+  <select id="pageQuery" resultMap="BaseResultMap">
+    select
+    pt.id,
+    (select user_name from tb_user where id = pt.create_id) as 'create_id',
+    (select user_name from tb_user where id = pt.update_id) as 'update_id',
+    pt.broad_type,pt.product_type,pt.generate_buy_no,pt.generate_sell_no,
+    pt.create_time,pt.update_time,pt.remark,pt.isdel
+    from tb_product_type pt where isdel = 0
+    <if test="broadType != null">
+      and broad_type like #{broadType}
+    </if>
+    <if test="productType != null">
+      and product_type like #{productType}
+    </if>
+    order by update_time desc
+  </select>
+
+  <update id="logicRemove">
+    update tb_product_type set isdel = 1 where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_product_type
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_product_type
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.icefrog.terminal.model.TbProductType" >
+    insert into tb_product_type (id, create_id, update_id, 
+      broad_type, product_type, generate_buy_no, 
+      generate_sell_no, create_time, update_time, 
+      remark, isdel)
+    values (#{id,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{updateId,jdbcType=VARCHAR}, 
+      #{broadType,jdbcType=VARCHAR}, #{productType,jdbcType=VARCHAR}, #{generateBuyNo,jdbcType=VARCHAR}, 
+      #{generateSellNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{isdel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.icefrog.terminal.model.TbProductType" >
+    insert into tb_product_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="broadType != null" >
+        broad_type,
+      </if>
+      <if test="productType != null" >
+        product_type,
+      </if>
+      <if test="generateBuyNo != null" >
+        generate_buy_no,
+      </if>
+      <if test="generateSellNo != null" >
+        generate_sell_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="broadType != null" >
+        #{broadType,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="generateBuyNo != null" >
+        #{generateBuyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="generateSellNo != null" >
+        #{generateSellNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icefrog.terminal.model.TbProductType" >
+    update tb_product_type
+    <set >
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="broadType != null" >
+        broad_type = #{broadType,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null" >
+        product_type = #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="generateBuyNo != null" >
+        generate_buy_no = #{generateBuyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="generateSellNo != null" >
+        generate_sell_no = #{generateSellNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icefrog.terminal.model.TbProductType" >
+    update tb_product_type
+    set create_id = #{createId,jdbcType=VARCHAR},
+      update_id = #{updateId,jdbcType=VARCHAR},
+      broad_type = #{broadType,jdbcType=VARCHAR},
+      product_type = #{productType,jdbcType=VARCHAR},
+      generate_buy_no = #{generateBuyNo,jdbcType=VARCHAR},
+      generate_sell_no = #{generateSellNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
