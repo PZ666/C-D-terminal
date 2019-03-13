@@ -8,15 +8,20 @@
 package com.icefrog.terminal;
 
 import com.github.pagehelper.PageHelper;
+import com.icefrog.terminal.interceptor.LoginedInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.MultipartConfigElement;
 import java.util.Properties;
 
 /***
@@ -28,8 +33,11 @@ import java.util.Properties;
  */
 @ServletComponentScan
 @SpringBootApplication
-@MapperScan(basePackages = "com.zoomgo.terminal.mapper")
+@MapperScan(basePackages = "com.icefrog.terminal.mapper")
 public class TerminalApplication extends SpringBootServletInitializer implements WebMvcConfigurer {
+    
+    @Autowired
+    private LoginedInterceptor loginedInterceptor;
     
     public static void main(String[] args) {
         SpringApplication.run(TerminalApplication.class, args);
@@ -43,13 +51,38 @@ public class TerminalApplication extends SpringBootServletInitializer implements
      */
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(SpringBootApplication.class);
+        return builder.sources(TerminalApplication.class);
+    }
+    
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        //单个文件最大
+        factory.setMaxFileSize("120MB"); //KB,MB
+        /// 设置总上传数据总大小
+        factory.setMaxRequestSize("120MB");
+        return factory.createMultipartConfig();
+    }
+    
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginedInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/css/**")
+                .excludePathPatterns("/js/**")
+                .excludePathPatterns("/error/**")
+                .excludePathPatterns("/system/authcode")
+                .excludePathPatterns("/system/login")
+                .excludePathPatterns("/fonts/**")
+                .excludePathPatterns("/menu-icons/**")
+                .excludePathPatterns("/image/**");
+        
     }
     
     /**
      * 配置Mybatis的分页插件PageHelper
      *
-     * @see https://github.com/pagehelper/pagehelper-spring-boot
+     * @link https://github.com/pagehelper/pagehelper-spring-boot
      */
     @Bean
     public PageHelper pageHelper() {
