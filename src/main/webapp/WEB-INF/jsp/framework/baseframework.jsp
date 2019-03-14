@@ -17,7 +17,7 @@
 	         <ul class="nav navbar-top-links navbar-right">
 	         	<!-- <li style="font-size:20px;" class="baseframe_title_li" onclick="openTalkWindow();"><i class="fa fa-commenting"></i><span class="badge"></span></li> -->
 	         	<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-	         	<li style="font-size:20px;" class="baseframe_title_li" ><label style="font-size:12px;">版本 V1.0.0<label></li>
+	         	<li style="font-size:20px;" class="baseframe_title_li" ><label style="font-size:12px;">版本 V1.0.1<label></li>
 	         	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <li>
                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
