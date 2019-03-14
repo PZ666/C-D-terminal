@@ -268,9 +268,9 @@ body{
   padding: 70px 30px;
   padding-top:20px;
   margin-top:16px;
-  background: url("patterns/header-profile.png");
+  background: url("patterns/header-profile.jpg");
   background-repeat:no-repeat;
-  width:190px;
+  /*width:190px;*/
 }
 .pace-done .nav-header {
   transition: all 0.4s;
