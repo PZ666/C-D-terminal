@@ -200,7 +200,7 @@
 </head>
 <body style="overflow: hidden; background: url('image/login.png'); background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
 <center>
-    <div style="margin-top: 15%;margin-left:35%; width: 30%; height: 400px; padding: 1% 1% 1% 1%; background-color: white; border-radius: 10px; box-shadow: -1px 0px 32px 0px rgba(116, 114, 114, 0.27);">
+    <div style="margin-top: 15%;margin-left:35%; width: 25%; height: 400px; padding: 1% 1% 1% 1%; background-color: white; border-radius: 10px; box-shadow: -1px 0px 32px 0px rgba(116, 114, 114, 0.27);">
         <div style="width: 100%;">
             <div style="width: 80%; margin-top: 4%;">
                 <span style="font-size: 19px; margin-left: 20px;">登录页面</span><br>
@@ -246,11 +246,8 @@
     </div>
 
 
-    <div style="position: fixed; bottom: 3.5%; width: 100%; z-index: 100;">
-        Copyright 2016-2018 All rights reserved
-    </div>
-    <div style="position: fixed; bottom: 1%; width: 100%; z-index: 100;">
-        <%--湖南众高电子商务有限公司 版权所有 湘ICP备18018471号-1--%>
+    <div style="position: fixed; bottom: 1.5%; width: 100%; z-index: 100;">
+        <img src="/image/GitHub.png" alt="跳转到GitHub仓库" style="width:30px;height:30px;cursor: pointer;" onclick="javascript:window.location.href='https://github.com/icefrog-su/C-D-terminal'";>
     </div>
 </center>
 <i id="loading" class="fa fa-spinner fa-spin loading-image"
